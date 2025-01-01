@@ -13,10 +13,9 @@ export class Rulesetbuild {
     protected tempDir = getTempDir() as string;
     private cwd = `${this.tempDir}`;
     /**
-        用户需要继承这个类，并实现其中的build()方法和package()方法。
-        其中build()方法用于准备ruleset必备的文件（如下载源代码并编译）。
-        当osulzrulesetman调用build()方法时，它会执行
-        build()方法生成的ruleset文件应该是个zip，其中包含一个ruleset.json文件以及必备的dll文件。
+        用户需要继承这个类，并重写其中的构造方法和build()方法。
+        其中build()方法用于准备ruleset必备的文件（如下载源代码并编译）并打包。
+        build()方法生成的ruleset文件应该是个zip，其中包含必备的dll文件。
      */
     constructor() {
         if (this.name === "unknown") return;
