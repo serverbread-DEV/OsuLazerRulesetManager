@@ -2,6 +2,15 @@
 
 这是一个适用于 osu!lazer 的 rulesets 管理器。
 
+**注意**，这个项目还没有完工，以下是将来（可能）会加入的功能：
+
+- [ ] 中心仓库，可下载/上传 Rulesetbuilds 文件
+- [ ] 本体更新检查
+- [ ] Ruleset 更新检查
+- [ ] 多平台支持
+- [ ] CI
+
+
 ## 如何使用
 
 当 OSU!Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesetman/` 目录初始化。
@@ -10,9 +19,22 @@
 
 ```text
 ~/.config/osulzrulesetman/
+~/.config/osulzrulesetman/const.ts
+~/.config/osulzrulesetman/node_modules/
+~/.config/osulzrulesetman/package.json
+~/.config/osulzrulesetman/pnpm-lock.yaml
 ~/.config/osulzrulesetman/rulesetbuilds/
-~/.config/osulzrulesetman/config.json
+~/.config/osulzrulesetman/rulesetbuilds/colorization.ts
+~/.config/osulzrulesetman/rulesetbuilds/log.ts
+~/.config/osulzrulesetman/rulesetbuilds/tempDir.ts
+~/.config/osulzrulesetman/Rulesetbuild.ts
+~/.config/osulzrulesetman/utils/
+~/.config/osulzrulesetman/utils/colorization.ts
+~/.config/osulzrulesetman/utils/log.ts
+~/.config/osulzrulesetman/utils/tempDir.ts
 ```
+
+其中`~/.config/osulzrulesetman/rulesetbuilds/`这个目录比较特殊
 
 OSU Lazer Ruleset Manager 通过存放在`rulesetbuilds`目录的ts文件（我们把它叫做`rulesetbuilds`文件）来描述一个Ruleset, 其中应当包含以下信息：
 
@@ -20,4 +42,4 @@ OSU Lazer Ruleset Manager 通过存放在`rulesetbuilds`目录的ts文件（我�
 - 源代码的编译，构建方法
 - 需要打包的文件
 
-[这里](src/examples/LLin.ts)有一个示例的 rulesetbuilds，你可以根据改写成你自己的 rulesetbuilds。
+[这里](src/examples/LLin.ts)有一个示例的 rulesetbuilds。经过测试能正常运行。
