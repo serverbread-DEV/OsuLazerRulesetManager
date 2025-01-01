@@ -1,0 +1,23 @@
+{
+  "name": "osulzrulesetman",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "build": "tsc",
+    "run": "ts-node src/app.ts",
+    "clear": "rm -rvf ~/.config/osulzrulesetman /tmp/osulzrulesetman"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "log4js": "^6.9.1"
+  }
+}
