@@ -4,7 +4,7 @@
 
 ## 如何使用
 
-当 OSU!Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesertman/` 目录初始化。
+当 OSU!Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesetman/` 目录初始化。
 
 以下文件将会被创建：
 
