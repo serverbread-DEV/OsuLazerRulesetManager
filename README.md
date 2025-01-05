@@ -1,6 +1,6 @@
-# OSU!Lazer Ruleset Manager
+# OSU Lazer Ruleset Manager
 
-这是一个适用于 osu!lazer 的 rulesets 管理器。
+这是一个适用于 [osu lazer](https://github.com/ppy/osu) 的 rulesets 管理器。
 
 **注意**，这个项目还没有完工，以下是将来（可能）会加入的功能：
 
@@ -12,7 +12,7 @@
 
 ## 如何使用
 
-当 OSU!Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesetman/` 目录初始化。
+当 OSU Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesetman/` 目录初始化。
 
 以下文件将会被创建：
 
