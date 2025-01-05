@@ -7,8 +7,9 @@
     "build": "tsc",
     "run": "ts-node src/app.ts",
     "clear": "rm -rvf ~/.config/osulzrulesetman /tmp/osulzrulesetman",
-    "lint": "eslint ./src",
-    "format": "prettier ./src --check"
+    "check:lint": "eslint ./src",
+    "check:format": "prettier ./src --check",
+    "format": "prettier ./src --write"
   },
   "keywords": [],
   "author": "",
