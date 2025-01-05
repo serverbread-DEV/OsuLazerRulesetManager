@@ -1,13 +1,12 @@
 import * as fs from "fs";
 import { join, resolve } from "path";
 import { execSync } from "child_process";
+import { platform } from "os";
 
 export function getUserDataDir(): string {
-    const platform = process.platform;
-    
-    if (platform === "linux") {
+    if (platform() === "linux") {
         return `${process.env.HOME}/.config/osulzrulesetman/`;
-    } else if (platform === "win32") {
+    } else if (platform() === "win32") {
         return `${process.env.APPDATA}/osulzrulesetman/`;
     } else {
         throw new Error("...?")
@@ -15,35 +14,16 @@ export function getUserDataDir(): string {
 }
 
 function runCmd(cmd : string) {
-    execSync(cmd, { cwd: getUserDataDir(), stdio: "inherit" });
+    execSync(cmd, { cwd: process.cwd(), stdio: "inherit" });
 }
-
-// export function initUserData() {
-//     runCmd(`rm -rf ${getUserDataDir()}`)
-//     const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
-//     fs.mkdirSync(getUserDataDir());
-//     runCmd(`cp ${resolve(process.cwd(), "src/Rulesetbuild.ts")} .`);
-//     runCmd(`pnpm add @types/node -D`);
-//     runCmd(`pnpm add log4js colors`);
-//     fs.mkdirSync(join(getUserDataDir(), "utils"));
-//     runCmd(`cp ${resolve(process.cwd(), "src/const.ts")} ./`,);
-//     runCmd(`cp ${resolve(process.cwd(), "src/utils/log.ts")} ./utils`,);
-//     runCmd(`cp ${resolve(process.cwd(), "src/utils/tempDir.ts")} ./utils`,);
-//     runCmd(`cp ${resolve(process.cwd(), "src/utils/colorization.ts")} ./utils`,);
-//     if (!fs.existsSync(join(getUserDataDir(), "rulesetbuilds"))) {
-//         fs.mkdirSync(join(getUserDataDir(), "rulesetbuilds"));
-//         fs.writeFileSync(join(getUserDataDir(), "rulesetbuilds/LLin.ts"), exampleRulesetbuild);
-//     }
-// }
 
 export function initUserData() {
     if (fs.existsSync(getUserDataDir())) return;
     fs.mkdirSync(getUserDataDir());
     fs.mkdirSync(join(getUserDataDir(), "utils"));
-    runCmd(`cp ${resolve(process.cwd(), "src/utils/loadLocalModule.ts")} ./utils/`);
-    const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
-    if (!fs.existsSync(join(getUserDataDir(), "rulesetbuilds"))) {
-        fs.mkdirSync(join(getUserDataDir(), "rulesetbuilds"));
-        fs.writeFileSync(join(getUserDataDir(), "rulesetbuilds/LLin.ts"), exampleRulesetbuild);
-    }
+    const rulesetbuildDir = resolve(getUserDataDir(), "rulesetbuilds/");
+    runCmd(`mkdir -p ${rulesetbuildDir}`)
+    runCmd(`cp src/utils/loadLocalModule.ts ${resolve(getUserDataDir(), "utils/")}`);
+    runCmd(`cp src/examples/LLin.ts ${rulesetbuildDir}`);
+    runCmd(`cp src/examples/Typer.ts ${rulesetbuildDir}`);
 }
