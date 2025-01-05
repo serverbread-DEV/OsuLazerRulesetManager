@@ -1,13 +1,14 @@
 import * as fs from "fs";
 import { execSync } from "child_process";
-import * as path from "path";
+import { resolve } from "path";
 import { info } from "./colorization";
 import logger from "./log";
+import { platform } from "os";
 
 let osuPath: string;
 
-if (process.platform === "linux") {
-    osuPath = "~/.local/share/osu/";
+if (platform() === "linux") {
+    osuPath = resolve(process.env["HOME"] as string, ".local/share/osu/");
 } else {
     osuPath = "¯\\_(ツ)_/¯ IDK";
 }

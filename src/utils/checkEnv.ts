@@ -9,6 +9,7 @@ export const checkCmds:{[key: string]: string} = {
     // debug1: "wdnmd114514",
     git: 'git --version',
     zip: 'zip --version',
+    unzip: 'unzip -v',
     // debug2: "wdnmd1919810"
 }
 

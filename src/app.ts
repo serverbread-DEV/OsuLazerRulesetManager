@@ -53,7 +53,7 @@ resolveRulesetbuild().then(rulesetbuildsList => {
             logger.log(processing + "Start Rulesetbuild...");
             const rulesetbuild = rulesetbuildsList[history[0]];
             rulesetbuild.build();
-            logger.log(ok + "Build Successfully!");
+            logger.log(ok + "Successfully!");
         }
     });
 });

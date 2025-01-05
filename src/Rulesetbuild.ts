@@ -93,13 +93,13 @@ export class Rulesetbuild {
     protected install() {
         this.log(`Installing ${this.name} to Osu...`);
 
-        this.cd(this.name);
+        this.cd(resolve(this.tempDir, this.name));
 
-        const osuRulesetPath = resolve(osuPath, "ruleset");
+        const osuRulesetPath = resolve(osuPath, "rulesets");
         const outputFilename = `${this.name}-${this.version}.zip`;
         const packagePath = resolve(resolve(this.tempDir, this.name, outputFilename));
 
-        this.cmd(`echo ${packagePath}`);
+        this.cmd(`unzip -o ${packagePath} -d ${osuRulesetPath}`);
     }
 
     // Methods to be overridden
