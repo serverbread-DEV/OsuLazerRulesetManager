@@ -19,13 +19,9 @@ export default (async () => {
         }
 
         override build() {
-            this.log('Prepare Resources...')
             this.getResource('git@github.com:peppy/ruleset-typer.git', 'git')
-            this.log('Building...')
             this.cd('ruleset-typer/osu.Game.Rulesets.Typer')
             this.cmd('dotnet build')
-            this.log('Build Complete!')
-            this.log('Packaging...')
 
             const artifactsDir = resolve(
                 this.tempDir,
@@ -39,7 +35,6 @@ export default (async () => {
             ]
             this.package(artifactsDir, fileList)
             this.install()
-            this.log('Install Complete!')
         }
     }
     return Typer

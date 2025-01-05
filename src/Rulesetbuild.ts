@@ -28,7 +28,7 @@ export class Rulesetbuild {
      * @param type The type of the address.
      */
     protected getResource(address: string, type: 'url' | 'git' | 'file') {
-        this.log(processing + `Getting resource from ${address} (${type})...`)
+        this.log(processing + `Preparing resources...`)
         this.cd(join(this.tempDir, this.name))
         let cmd = ''
         if (type === 'url') cmd = `curl -O ${address}`
@@ -36,7 +36,7 @@ export class Rulesetbuild {
         if (type === 'file') cmd = `cp -r ${address} .`
         try {
             this.cmd(cmd)
-            this.log(ok + `Finished`)
+            this.log(ok + `Resource is ready`)
         } catch (e) {
             logger.error(failed + 'Error occurred, skipping...' + e)
         }
@@ -47,7 +47,7 @@ export class Rulesetbuild {
      * @param message The message to be logged.
      */
     protected log(message: string) {
-        logger.log(info + `[Build Ruleset]${this.name} => ${message}`)
+        logger.log(`[Build]${this.name} => ${message}`)
     }
 
     /**
@@ -56,7 +56,7 @@ export class Rulesetbuild {
      * @returns The output of the command.
      */
     protected cmd(command: string) {
-        this.log(`(shell)>$ ${command}`)
+        this.log(`(SHELL)$ ${command}`)
         return execSync(command, { cwd: this.cwd, stdio: 'inherit' })
     }
 
@@ -69,7 +69,7 @@ export class Rulesetbuild {
         if (!existsSync(this.cwd))
             throw new Error(`Unable to locate directory: ${this.cwd}`)
 
-        this.log(`(cd)=> ${this.cwd}`)
+        this.log(`(CD)=> ${this.cwd}`)
         return
     }
 
@@ -97,9 +97,8 @@ export class Rulesetbuild {
         this.log(info + `Package: ${outputFilePath}`)
     }
 
-    // TODO
-    protected install() {
-        this.log(`Installing ${this.name} to Osu...`)
+    public install() {
+        this.log(info + `Installing ${this.name} to Osu...`)
 
         this.cd(resolve(this.tempDir, this.name))
 
@@ -113,6 +112,5 @@ export class Rulesetbuild {
     }
 
     // Methods to be overridden
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public build() {}
 }

@@ -24,10 +24,8 @@ export default (async () => {
         // 重写build()方法，在其中进行dll的编译，打包等。
         override build() {
             // Rulesetbuild#log()：推荐使用此方法打印日志。
-            this.log('Prepare Resources...')
             // Rulesetbuild#getResource()：从网络或本地准备资源文件，详细请查看方法定义。
             this.getResource('git@github.com:MATRIX-feather/LLin.git', 'git')
-            this.log('Building...')
             // Rulesetbuild#cd(): 用此方法改变目录
             this.cd('LLin')
             // Rulesetbuild#cmd(): 在shell里执行一条命令
@@ -35,8 +33,6 @@ export default (async () => {
             this.cmd(
                 'dotnet publish IGPlayerLoader -c Release /p:WarningLevel=0',
             )
-            this.log('Build Complete!')
-            this.log('Packaging...')
             // Artifacts saved in IGPlayerLoader/bin/Release/net8.0/publish/
             // Rulesetbuild#package()：将构建产物打包。
             const artifactsDir = resolve(
@@ -52,8 +48,6 @@ export default (async () => {
                 'Tmds.*.dll',
             ]
             this.package(artifactsDir, fileList)
-            this.install()
-            this.log('Install Complete!')
         }
     }
     return LLin
