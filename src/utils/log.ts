@@ -1,10 +1,10 @@
-import log4js from 'log4js'
-import { logLevel } from '../const'
+import log4js from 'log4js';
+import { logLevel } from '../const';
 
-const logger = log4js.getLogger('O.o')
+const logger = log4js.getLogger('O.o');
 
-logger.level = logLevel
+logger.level = logLevel;
 
-logger.info('logLevel:', logLevel)
+logger.info('logLevel:', logLevel);
 
-export default logger
+export default logger;

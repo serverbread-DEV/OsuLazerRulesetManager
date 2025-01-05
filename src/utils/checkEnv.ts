@@ -1,9 +1,9 @@
-import { execSync } from 'child_process'
-import logger from './log'
-import { platform } from 'os'
-import { processing } from './colorization'
-import { supportedPlatforms } from '../const'
-import { extname } from 'path'
+import { execSync } from 'child_process';
+import logger from './log';
+import { platform } from 'os';
+import { processing } from './colorization';
+import { supportedPlatforms } from '../const';
+import { extname } from 'path';
 
 export const checkCmds: Record<string, string> = {
     curl: 'curl --version',
@@ -13,32 +13,32 @@ export const checkCmds: Record<string, string> = {
     zip: 'zip --version',
     unzip: 'unzip -v',
     // debug2: "wdnmd1919810"
-}
+};
 
 export function checkEnv() {
-    const result: Record<string, string | null> = {}
+    const result: Record<string, string | null> = {};
 
     for (const key in checkCmds) {
         try {
-            const commandResult = execSync(checkCmds[key])
+            const commandResult = execSync(checkCmds[key]);
             logger.debug(
                 processing +
                     `Checking ${key}...\n${commandResult.toString().trim()}`,
-            )
-            result[key] = commandResult.toString()
+            );
+            result[key] = commandResult.toString();
         } catch (e) {
-            logger.error(e)
-            result[key] = null
+            logger.error(e);
+            result[key] = null;
         }
     }
 
-    return result
+    return result;
 }
 
 export function checkPlatform() {
-    return supportedPlatforms.includes(platform())
+    return supportedPlatforms.includes(platform());
 }
 
-export const runningMode = extname(process.argv[1])
+export const runningMode = extname(process.argv[1]);
 
-logger.log(`Running mode: ${runningMode}`)
+logger.log(`Running mode: ${runningMode}`);

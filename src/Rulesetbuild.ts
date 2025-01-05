@@ -1,25 +1,25 @@
-import { execSync } from 'child_process'
-import logger from './utils/log'
-import { getTempDir } from './utils/tempDir'
-import { ok, info, processing, failed } from './utils/colorization'
-import { existsSync } from 'node:fs'
-import { resolve, join, isAbsolute } from 'path'
-import osuPath from './utils/osuPath'
+import { execSync } from 'child_process';
+import logger from './utils/log';
+import { getTempDir } from './utils/tempDir';
+import { ok, info, processing, failed } from './utils/colorization';
+import { existsSync } from 'node:fs';
+import { resolve, join, isAbsolute } from 'path';
+import osuPath from './utils/osuPath';
 
 export class Rulesetbuild {
-    readonly name: string = 'unknown'
-    readonly description: string = 'unknown'
-    readonly author: string = 'unknown'
-    readonly version: string = 'unknown'
-    protected tempDir = getTempDir() as string
-    private cwd = `${this.tempDir}`
+    readonly name: string = 'unknown';
+    readonly description: string = 'unknown';
+    readonly author: string = 'unknown';
+    readonly version: string = 'unknown';
+    protected tempDir = getTempDir() as string;
+    private cwd = `${this.tempDir}`;
     /**
         用户需要继承这个类，并重写其中的构造方法和build()方法。
         其中build()方法用于准备ruleset必备的文件（如下载源代码并编译）并打包。
         build()方法生成的ruleset文件应该是个zip，其中包含必备的dll文件。
      */
     constructor() {
-        if (this.name === 'unknown') return
+        if (this.name === 'unknown') return;
     }
 
     /**
@@ -28,17 +28,17 @@ export class Rulesetbuild {
      * @param type The type of the address.
      */
     protected getResource(address: string, type: 'url' | 'git' | 'file') {
-        this.log(processing + `Preparing resources...`)
-        this.cd(join(this.tempDir, this.name))
-        let cmd = ''
-        if (type === 'url') cmd = `curl -O ${address}`
-        if (type === 'git') cmd = `git clone ${address}`
-        if (type === 'file') cmd = `cp -r ${address} .`
+        this.log(processing + `Preparing resources...`);
+        this.cd(join(this.tempDir, this.name));
+        let cmd = '';
+        if (type === 'url') cmd = `curl -O ${address}`;
+        if (type === 'git') cmd = `git clone ${address}`;
+        if (type === 'file') cmd = `cp -r ${address} .`;
         try {
-            this.cmd(cmd)
-            this.log(ok + `Resource is ready`)
+            this.cmd(cmd);
+            this.log(ok + `Resource is ready`);
         } catch (e) {
-            logger.error(failed + 'Error occurred, skipping...' + e)
+            logger.error(failed + 'Error occurred, skipping...' + e);
         }
     }
 
@@ -47,7 +47,7 @@ export class Rulesetbuild {
      * @param message The message to be logged.
      */
     protected log(message: string) {
-        logger.log(`[Build]${this.name} => ${message}`)
+        logger.log(`[Build]${this.name} => ${message}`);
     }
 
     /**
@@ -56,29 +56,29 @@ export class Rulesetbuild {
      * @returns The output of the command.
      */
     protected cmd(command: string) {
-        this.log(`(SHELL)$ ${command}`)
-        return execSync(command, { cwd: this.cwd, stdio: 'inherit' })
+        this.log(`(SHELL)$ ${command}`);
+        return execSync(command, { cwd: this.cwd, stdio: 'inherit' });
     }
 
     protected cd(targetPath: string) {
         if (isAbsolute(targetPath)) {
-            this.cwd = targetPath
+            this.cwd = targetPath;
         } else {
-            this.cwd = resolve(this.cwd, targetPath)
+            this.cwd = resolve(this.cwd, targetPath);
         }
         if (!existsSync(this.cwd))
-            throw new Error(`Unable to locate directory: ${this.cwd}`)
+            throw new Error(`Unable to locate directory: ${this.cwd}`);
 
-        this.log(`(CD)=> ${this.cwd}`)
-        return
+        this.log(`(CD)=> ${this.cwd}`);
+        return;
     }
 
     protected package(absolutePrefix: string, filename: string[]) {
         if (!isAbsolute(absolutePrefix))
-            throw new Error(`not absolute: ${absolutePrefix}`)
-        const outputFilename = `${this.name}-${this.version}.zip`
-        const outputFilePath = resolve(this.tempDir, this.name, outputFilename)
-        this.cd(absolutePrefix)
+            throw new Error(`not absolute: ${absolutePrefix}`);
+        const outputFilename = `${this.name}-${this.version}.zip`;
+        const outputFilePath = resolve(this.tempDir, this.name, outputFilename);
+        this.cd(absolutePrefix);
 
         const files = execSync(
             `ls ${filename.toString().replaceAll(',', ' ')}`,
@@ -87,28 +87,28 @@ export class Rulesetbuild {
             },
         )
             .toString()
-            .replaceAll('\n', ' ')
+            .replaceAll('\n', ' ');
 
         try {
-            this.cmd(`zip -ur ${outputFilePath} ${files}`)
+            this.cmd(`zip -ur ${outputFilePath} ${files}`);
         } catch (e) {
-            logger.error(failed + 'Error occurred, skipping...' + e)
+            logger.error(failed + 'Error occurred, skipping...' + e);
         }
-        this.log(info + `Package: ${outputFilePath}`)
+        this.log(info + `Package: ${outputFilePath}`);
     }
 
     public install() {
-        this.log(info + `Installing ${this.name} to Osu...`)
+        this.log(info + `Installing ${this.name} to Osu...`);
 
-        this.cd(resolve(this.tempDir, this.name))
+        this.cd(resolve(this.tempDir, this.name));
 
-        const osuRulesetPath = resolve(osuPath, 'rulesets')
-        const outputFilename = `${this.name}-${this.version}.zip`
+        const osuRulesetPath = resolve(osuPath, 'rulesets');
+        const outputFilename = `${this.name}-${this.version}.zip`;
         const packagePath = resolve(
             resolve(this.tempDir, this.name, outputFilename),
-        )
+        );
 
-        this.cmd(`unzip -o ${packagePath} -d ${osuRulesetPath}`)
+        this.cmd(`unzip -o ${packagePath} -d ${osuRulesetPath}`);
     }
 
     // Methods to be overridden
