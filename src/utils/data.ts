@@ -23,9 +23,10 @@ export function initUserData() {
     fs.mkdirSync(join(getUserDataDir(), 'utils'))
     const rulesetbuildDir = resolve(getUserDataDir(), 'rulesetbuilds/')
     runCmd(`mkdir -p ${rulesetbuildDir}`)
+    runCmd('pwd')
     runCmd(
-        `cp src/utils/loadLocalModule.ts ${resolve(getUserDataDir(), 'utils/')}`,
+        `cp utils/loadLocalModule.ts ${resolve(getUserDataDir(), 'utils/')}`,
     )
-    runCmd(`cp src/examples/LLin.ts ${rulesetbuildDir}`)
-    runCmd(`cp src/examples/Typer.ts ${rulesetbuildDir}`)
+    runCmd(`cp examples/LLin.ts ${rulesetbuildDir}`)
+    runCmd(`cp examples/Typer.ts ${rulesetbuildDir}`)
 }

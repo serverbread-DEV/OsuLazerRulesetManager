@@ -5,7 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
-    "run": "ts-node src/app.ts",
+    "run": "cd src && ts-node app.ts",
     "clear": "rm -rvf ~/.config/osulzrulesetman /tmp/osulzrulesetman",
     "check:lint": "eslint ./src",
     "check:format": "prettier ./src --check",
