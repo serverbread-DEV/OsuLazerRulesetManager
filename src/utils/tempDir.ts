@@ -1,10 +1,9 @@
 import * as fs from "fs";
+import { platform } from "os";
 import { resolve } from "path";
 
 export function getTempDir() {
-    const platform = process.platform;
-
-    if (platform === "linux") {
+    if (platform() === "linux") {
         const tmpDir = process.env["TMPDIR"];
         return resolve(tmpDir ? tmpDir : "/tmp", "osulzrulesetman");
     }
