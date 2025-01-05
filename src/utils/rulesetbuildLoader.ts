@@ -16,14 +16,14 @@ function checkRulesetbuilds(rulesetbuilPath: string) {
 
     const content = fs.readFileSync(rulesetbuilPath, "utf-8");
 
-    if (!content.includes(code)) return false;
+    return content.includes(code);
 
-    return true;
+
 }
 
 export async function importRulesetbuilds() {
     let rulesetbuildsObjectsList: { [key: string]: Rulesetbuild } = {};
-    let rulesetbuildsList = execSync(`ls ${rulesetbuildsDir}`).toString().trim().split(" ");
+    let rulesetbuildsList = execSync(`ls ${rulesetbuildsDir}`).toString().trim().split("\n");
 
     if (rulesetbuildsList[0].length === 0) {
         rulesetbuildsList = [];

@@ -19,8 +19,9 @@ function runCmd(cmd : string) {
 }
 
 export function initUserData() {
+    if (fs.existsSync(getUserDataDir())) return;
     const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
-    if (!fs.existsSync(getUserDataDir())) fs.mkdirSync(getUserDataDir());
+    fs.mkdirSync(getUserDataDir());
     runCmd(`cp ${resolve(process.cwd(), "src/Rulesetbuild.ts")} .`);
     runCmd(`pnpm add @types/node -D`);
     runCmd(`pnpm add log4js colors`);
