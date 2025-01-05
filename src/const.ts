@@ -1,5 +1,5 @@
-import { Level } from "log4js";
+import { Level } from 'log4js'
 
-export const logLevel: Level | string = "debug";
+export const logLevel: Level | string = 'debug'
 
-export const supportedPlatforms = ["linux"];
+export const supportedPlatforms = ['linux']

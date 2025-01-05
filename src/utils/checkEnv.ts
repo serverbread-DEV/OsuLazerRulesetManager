@@ -1,9 +1,10 @@
-import { execSync } from 'child_process';
-import logger from './log';
-import { processing } from "./colorization";
-import { supportedPlatforms } from "../const";
+import { execSync } from 'child_process'
+import logger from './log'
+import { platform } from 'os'
+import { processing } from './colorization'
+import { supportedPlatforms } from '../const'
 
-export const checkCmds:{[key: string]: string} = {
+export const checkCmds: Record<string, string> = {
     curl: 'curl --version',
     dotnetsdk: 'dotnet --list-sdks',
     // debug1: "wdnmd114514",
@@ -14,23 +15,25 @@ export const checkCmds:{[key: string]: string} = {
 }
 
 export function checkEnv() {
-    const result: { [key: string]: string | null } = {};
+    const result: Record<string, string | null> = {}
 
     for (const key in checkCmds) {
         try {
-            const commandResult = execSync(checkCmds[key]);
-            logger.debug(processing + `Checking ${key}...\n${commandResult.toString().trim()}`);
-            result[key] = commandResult.toString();
+            const commandResult = execSync(checkCmds[key])
+            logger.debug(
+                processing +
+                    `Checking ${key}...\n${commandResult.toString().trim()}`,
+            )
+            result[key] = commandResult.toString()
         } catch (e) {
-            logger.error(e);
-            result[key] = null;
+            logger.error(e)
+            result[key] = null
         }
     }
 
-    return result;
+    return result
 }
 
 export function checkPlatform() {
-    const platform = process.platform;
-    return supportedPlatforms.includes(platform);
+    return supportedPlatforms.includes(platform())
 }

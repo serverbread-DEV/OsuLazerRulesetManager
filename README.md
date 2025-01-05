@@ -10,7 +10,6 @@
 - [ ] 多平台支持
 - [ ] CI
 
-
 ## 如何使用
 
 当 OSU!Lazer Ruleset Manager 第一次启动时，会在 `~/.config/osulzrulesetman/` 目录初始化。
