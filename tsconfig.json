@@ -11,5 +11,5 @@
     "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["src/examples"]
+  // "exclude": ["src/examples"]
 }
