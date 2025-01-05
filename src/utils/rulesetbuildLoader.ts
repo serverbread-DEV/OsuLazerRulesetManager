@@ -1,10 +1,11 @@
 import * as fs from 'fs'
 import { execSync } from 'child_process'
-import { resolve } from 'path'
+import { resolve, extname, basename } from 'path'
 import { getUserDataDir } from './data'
 import logger from './log'
 import { Rulesetbuild } from '../Rulesetbuild'
-import { failed, ok } from './colorization'
+import { failed, ok, info, processing } from './colorization'
+import { runningMode } from './checkEnv'
 
 const logPrefix = '[RulesetbuildLoader]'
 
@@ -30,17 +31,42 @@ export async function importRulesetbuilds() {
         rulesetbuildsList = []
     }
 
-    for (const rulesetbuild of rulesetbuildsList) {
+    for (const i in rulesetbuildsList) {
+        const rulesetbuild = rulesetbuildsList[i]
         const rulesetbuildsPath = resolve(rulesetbuildsDir, rulesetbuild)
 
-        if (!checkRulesetbuilds(rulesetbuildsPath)) {
-            logger.warn(
-                logPrefix +
-                    failed +
-                    `Invalid rulesetbuilds: ${rulesetbuildsPath}`,
+        // runtime compile
+        if (extname(rulesetbuildsPath) === runningMode) {
+            // check filename == class name?
+            if (!checkRulesetbuilds(rulesetbuildsPath)) {
+                logger.warn(
+                    logPrefix +
+                        failed +
+                        `Invalid rulesetbuilds: ${rulesetbuildsPath}`,
+                )
+                continue
+            }
+        } else if (extname(rulesetbuildsPath) === '.ts') {
+            logger.log(processing + `Compiling ${basename(rulesetbuildsPath)}`)
+            execSync(
+                `npx tsc --target ES2021 --module CommonJS ./${basename(rulesetbuildsPath)}`,
+                {
+                    cwd: resolve(getUserDataDir(), 'rulesetbuilds'),
+                    stdio: 'inherit',
+                },
             )
+            execSync(
+                `mv ./${basename(rulesetbuildsPath)} ${basename(rulesetbuildsPath)}.old`,
+                {
+                    cwd: resolve(getUserDataDir(), 'rulesetbuilds'),
+                },
+            )
+            logger.log(
+                ok + `Rulesetbuild ${basename(rulesetbuildsPath)} compiled.`,
+            )
+            logger.warn(info + `Please restart to apply changes.`)
             continue
-        }
+        } else continue
 
         const RulesetbuildClass = await (
             await import(rulesetbuildsPath)

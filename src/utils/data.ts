@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import { join, resolve } from 'path'
 import { execSync } from 'child_process'
 import { platform } from 'os'
+import { runningMode } from './checkEnv'
 
 export function getUserDataDir(): string {
     if (platform() === 'linux') {
@@ -25,8 +26,9 @@ export function initUserData() {
     runCmd(`mkdir -p ${rulesetbuildDir}`)
     runCmd('pwd')
     runCmd(
-        `cp utils/loadLocalModule.ts ${resolve(getUserDataDir(), 'utils/')}`,
+        `cp utils/loadLocalModule${runningMode} ${resolve(getUserDataDir(), 'utils/')}`,
     )
-    runCmd(`cp examples/LLin.ts ${rulesetbuildDir}`)
-    runCmd(`cp examples/Typer.ts ${rulesetbuildDir}`)
+    runCmd(`cp examples/LLin${runningMode} ${rulesetbuildDir}`)
+    runCmd(`cp examples/Typer${runningMode} ${rulesetbuildDir}`)
+    execSync('pnpm add typescript @types/node -D', { cwd: getUserDataDir() })
 }

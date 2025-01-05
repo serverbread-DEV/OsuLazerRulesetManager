@@ -3,6 +3,7 @@ import logger from './log'
 import { platform } from 'os'
 import { processing } from './colorization'
 import { supportedPlatforms } from '../const'
+import { extname } from 'path'
 
 export const checkCmds: Record<string, string> = {
     curl: 'curl --version',
@@ -37,3 +38,7 @@ export function checkEnv() {
 export function checkPlatform() {
     return supportedPlatforms.includes(platform())
 }
+
+export const runningMode = extname(process.argv[1])
+
+logger.log(`Running mode: ${runningMode}`)
