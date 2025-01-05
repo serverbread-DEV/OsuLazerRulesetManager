@@ -37,7 +37,7 @@ export async function importRulesetbuilds() {
             continue;
         }
 
-        const RulesetbuildClass: any = (await import(rulesetbuildsPath)).default;
+        const RulesetbuildClass: any = await (await import(rulesetbuildsPath)).default;
 
         rulesetbuildsObjectsList[rulesetbuild.split('.')[0]] = new RulesetbuildClass()
         logger.log(logPrefix + ok + `Rulesetbuilds ${rulesetbuild} loaded`);

@@ -18,18 +18,30 @@ function runCmd(cmd : string) {
     execSync(cmd, { cwd: getUserDataDir(), stdio: "inherit" });
 }
 
+// export function initUserData() {
+//     runCmd(`rm -rf ${getUserDataDir()}`)
+//     const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
+//     fs.mkdirSync(getUserDataDir());
+//     runCmd(`cp ${resolve(process.cwd(), "src/Rulesetbuild.ts")} .`);
+//     runCmd(`pnpm add @types/node -D`);
+//     runCmd(`pnpm add log4js colors`);
+//     fs.mkdirSync(join(getUserDataDir(), "utils"));
+//     runCmd(`cp ${resolve(process.cwd(), "src/const.ts")} ./`,);
+//     runCmd(`cp ${resolve(process.cwd(), "src/utils/log.ts")} ./utils`,);
+//     runCmd(`cp ${resolve(process.cwd(), "src/utils/tempDir.ts")} ./utils`,);
+//     runCmd(`cp ${resolve(process.cwd(), "src/utils/colorization.ts")} ./utils`,);
+//     if (!fs.existsSync(join(getUserDataDir(), "rulesetbuilds"))) {
+//         fs.mkdirSync(join(getUserDataDir(), "rulesetbuilds"));
+//         fs.writeFileSync(join(getUserDataDir(), "rulesetbuilds/LLin.ts"), exampleRulesetbuild);
+//     }
+// }
+
 export function initUserData() {
     if (fs.existsSync(getUserDataDir())) return;
-    const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
     fs.mkdirSync(getUserDataDir());
-    runCmd(`cp ${resolve(process.cwd(), "src/Rulesetbuild.ts")} .`);
-    runCmd(`pnpm add @types/node -D`);
-    runCmd(`pnpm add log4js colors`);
     fs.mkdirSync(join(getUserDataDir(), "utils"));
-    runCmd(`cp ${resolve(process.cwd(), "src/const.ts")} ./`,);
-    runCmd(`cp ${resolve(process.cwd(), "src/utils/log.ts")} ./utils`,);
-    runCmd(`cp ${resolve(process.cwd(), "src/utils/tempDir.ts")} ./utils`,);
-    runCmd(`cp ${resolve(process.cwd(), "src/utils/colorization.ts")} ./utils`,);
+    runCmd(`cp ${resolve(process.cwd(), "src/utils/loadLocalModule.ts")} ./utils/`);
+    const exampleRulesetbuild = fs.readFileSync(`src/examples/LLin.ts`, "utf8");
     if (!fs.existsSync(join(getUserDataDir(), "rulesetbuilds"))) {
         fs.mkdirSync(join(getUserDataDir(), "rulesetbuilds"));
         fs.writeFileSync(join(getUserDataDir(), "rulesetbuilds/LLin.ts"), exampleRulesetbuild);

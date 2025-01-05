@@ -19,19 +19,9 @@
 
 ```text
 ~/.config/osulzrulesetman/
-~/.config/osulzrulesetman/const.ts
-~/.config/osulzrulesetman/node_modules/
-~/.config/osulzrulesetman/package.json
-~/.config/osulzrulesetman/pnpm-lock.yaml
 ~/.config/osulzrulesetman/rulesetbuilds/
-~/.config/osulzrulesetman/rulesetbuilds/colorization.ts
-~/.config/osulzrulesetman/rulesetbuilds/log.ts
-~/.config/osulzrulesetman/rulesetbuilds/tempDir.ts
-~/.config/osulzrulesetman/Rulesetbuild.ts
 ~/.config/osulzrulesetman/utils/
-~/.config/osulzrulesetman/utils/colorization.ts
-~/.config/osulzrulesetman/utils/log.ts
-~/.config/osulzrulesetman/utils/tempDir.ts
+~/.config/osulzrulesetman/utils/loadLocalModule.ts
 ```
 
 其中`~/.config/osulzrulesetman/rulesetbuilds/`这个目录比较特殊

@@ -1,4 +1,4 @@
-import { info, processing, ok, failed, ask } from "./utils/colorization";
+import { processing, ok, failed, ask } from "./utils/colorization";
 import logger from "./utils/log";
 import { checkEnv, checkPlatform } from "./utils/checkEnv";
 import { supportedPlatforms } from "./const";
@@ -51,7 +51,8 @@ resolveRulesetbuild().then(rulesetbuildsList => {
             rl.close();
             console.log('\n');
             logger.log(processing + "Start Rulesetbuild...");
-            rulesetbuildsList[history[0]].build();
+            const rulesetbuild = rulesetbuildsList[history[0]];
+            rulesetbuild.build();
             logger.log(ok + "Build Successfully!");
         }
     });

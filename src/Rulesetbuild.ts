@@ -3,7 +3,8 @@ import logger from "./utils/log";
 import { getTempDir } from "./utils/tempDir";
 import {ok, info, processing, failed} from "./utils/colorization"
 import { existsSync } from "node:fs";
-import { resolve, join, relative, isAbsolute } from "path";
+import { resolve, join, isAbsolute } from "path";
+import osuPath from "./utils/osuPath";
 
 export class Rulesetbuild {
     readonly name: string = "unknown";
@@ -28,6 +29,7 @@ export class Rulesetbuild {
      */
     protected getResource(address: string, type: "url" | "git" | "file") {
         this.log(processing + `Getting resource from ${address} (${type})...`);
+        this.cd(join(this.tempDir, this.name));
         let cmd: string = "";
         if (type === "url") cmd = `curl -O ${address}`;
         if (type === "git") cmd = `git clone ${address}`;
@@ -54,7 +56,7 @@ export class Rulesetbuild {
      * @returns The output of the command.
      */
     protected cmd(command: string) {
-        this.log(`(shell)${this.cwd}>$ ${command}`);
+        this.log(`(shell)>$ ${command}`);
         return execSync(command, { cwd: this.cwd, stdio: "inherit" })
     }
 
@@ -85,6 +87,19 @@ export class Rulesetbuild {
             logger.error(failed + "Error occurred, skipping...");
         }
         this.log(info + `Package: ${outputFilePath}`);
+    }
+
+    // TODO
+    protected install() {
+        this.log(`Installing ${this.name} to Osu...`);
+
+        this.cd(this.name);
+
+        const osuRulesetPath = resolve(osuPath, "ruleset");
+        const outputFilename = `${this.name}-${this.version}.zip`;
+        const packagePath = resolve(resolve(this.tempDir, this.name, outputFilename));
+
+        this.cmd(`echo ${packagePath}`);
     }
 
     // Methods to be overridden
