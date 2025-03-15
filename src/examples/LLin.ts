@@ -30,9 +30,9 @@ export default (async () => {
             // Rulesetbuild#cd(): 用此方法改变目录
             this.cd('LLin');
             // Rulesetbuild#cmd(): 在shell里执行一条命令
-            this.cmd('dotnet restore IGPlayerLoader');
+            this.cmd('dotnet restore BuildHikariii');
             this.cmd(
-                'dotnet publish IGPlayerLoader -c Release /p:WarningLevel=0',
+                'dotnet publish BuildHikariii -c Release /p:WarningLevel=0',
             );
             // Artifacts saved in IGPlayerLoader/bin/Release/net8.0/publish/
             // Rulesetbuild#package()：将构建产物打包。
@@ -40,7 +40,7 @@ export default (async () => {
                 this.tempDir,
                 this.name,
                 'LLin',
-                'IGPlayerLoader/bin/Release/net8.0/publish/',
+                'BuildHikariii/bin/Release/net8.0/publish/',
             );
             const fileList = [
                 'M.*.dll',
